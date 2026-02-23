@@ -4,6 +4,7 @@ import by.glesap.task3.exception.DockException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -58,18 +59,33 @@ public class Storage {
   }
 
   public void addContainers(int amount) throws DockException {
-    if (unloadContainerAmount + amount > unloadCapacity) {
-      throw new DockException("Storage can't have more than" + unloadCapacity +
-              "containers");
+    try {
+      lock.lock();
+      if (unloadContainerAmount + amount > unloadCapacity) {
+        TimeUnit.MILLISECONDS.sleep(500);
+      }
+      unloadContainerAmount += amount;
     }
-    unloadContainerAmount += amount;
+    catch (InterruptedException e) {
+      logger.error(e.getMessage());
+    }
+    finally {
+      lock.unlock();
+    }
   }
 
   public void borrowContainers(int amount) throws DockException {
-    if (loadContainerAmount < amount) {
-      throw new DockException("Not enough containers");
+    try {
+      lock.lock();
+      while (loadContainerAmount < amount) {
+        TimeUnit.MILLISECONDS.sleep(500);
+      }
+      loadContainerAmount -= amount;
+    } catch (InterruptedException e) {
+      throw new RuntimeException(e);
+    } finally {
+      lock.unlock();
     }
-    loadContainerAmount -= amount;
   }
 
 }
