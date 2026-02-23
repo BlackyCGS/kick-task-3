@@ -6,4 +6,8 @@ public class Dock {
   public Dock(int dockNumber) {
     this.dockNumber = dockNumber;
   }
+
+  public int getDockNumber() {
+    return dockNumber;
+  }
 }

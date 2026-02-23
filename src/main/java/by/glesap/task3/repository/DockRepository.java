@@ -18,6 +18,7 @@ public class DockRepository {
   private final LinkedList<Dock> docks = new LinkedList<>();
 
   public static DockRepository getInstance() {
+    logger.info("DockRepository.getInstance()");
     if (!isCreated.get()) {
       try {
         lock.lock();
@@ -39,6 +40,7 @@ public class DockRepository {
   }
 
   public void add(Dock dock) {
+    logger.info("Added dock {} to repository", dock.getDockNumber());
     try {
       lock.lock();
       docks.addLast(dock);
@@ -49,6 +51,7 @@ public class DockRepository {
   }
 
   public Dock getFreeDock() {
+    logger.info("getFreeDock()");
     try {
       lock.lock();
       return docks.pollFirst();
