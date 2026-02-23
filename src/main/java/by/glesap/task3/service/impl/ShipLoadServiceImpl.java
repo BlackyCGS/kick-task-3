@@ -23,6 +23,7 @@ public class ShipLoadServiceImpl implements ShipLoadService {
         logger.error(e.getMessage());
       }
     }
+    logger.info("Ship {} loaded", ship.getShipName());
   }
 
   @Override
@@ -37,5 +38,6 @@ public class ShipLoadServiceImpl implements ShipLoadService {
         logger.error(e.getMessage());
       }
     }
+    logger.info("Ship {} unloaded", ship.getShipName());
   }
 }

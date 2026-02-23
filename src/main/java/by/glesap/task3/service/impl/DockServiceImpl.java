@@ -15,6 +15,7 @@ public class DockServiceImpl implements DockService {
 
   @Override
   public Dock requestFreeDock() {
+    logger.info("Free dock requested");
     Dock dock = repository.getFreeDock();
     while (dock == null) {
       try {
@@ -30,11 +31,13 @@ public class DockServiceImpl implements DockService {
 
   @Override
   public void dockShip(Ship ship, Dock dock) {
+    logger.info("Ship {} docked", ship.getShipName());
     ship.setCurrentDock(dock);
   }
 
   @Override
   public void undockShip(Ship ship) {
+    logger.info("Ship {} undocked", ship.getShipName());
     Dock dock = ship.getCurrentDock();
     ship.setCurrentDock(null);
     repository.add(dock);
