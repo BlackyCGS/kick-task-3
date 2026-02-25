@@ -18,7 +18,6 @@ public class ShipDepartedState implements ShipState {
       TimeUnit.SECONDS.sleep(1);
       dockService.undockShip(ship);
       logger.info("Ship {} departed", ship.getShipName());
-      ship.interrupt();
     }
     catch (InterruptedException e) {
       logger.error(e.getMessage());

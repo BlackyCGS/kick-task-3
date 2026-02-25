@@ -1,22 +1,41 @@
 package by.glesap.task3;
 
 import by.glesap.task3.entity.Ship;
+import by.glesap.task3.parser.CustomShipParser;
+import by.glesap.task3.parser.impl.CustomShipParserImpl;
+import by.glesap.task3.reader.CustomFileReader;
+import by.glesap.task3.reader.impl.CustomFileReaderImpl;
 import by.glesap.task3.util.StorageLoader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.*;
 
 public class Main {
-  public static void main(String[] args) {
+  public static final Logger logger = LoggerFactory.getLogger(Main.class);
+
+  public static void main(String[] args) throws InterruptedException {
     StorageLoader storage = new StorageLoader();
     storage.start();
-    Ship ship1 = new Ship("a", 100, 0);
-    Ship ship2 = new Ship("b", 100, 10);
-    Ship ship3 = new Ship("c", 100, 20);
-    Ship ship4 = new Ship("d", 100, 30);
-
-    ship1.start();
-    ship2.start();
-    ship3.start();
-    ship4.start();
-
-
+    CustomFileReader reader = new CustomFileReaderImpl();
+    List<String> lines;
+    try {
+      lines = reader.readFile("data/input.txt");
+    }
+    catch (IOException e) {
+      logger.error(e.getMessage());
+      logger.error("Shutting down...");
+      return;
+    }
+    CustomShipParser parser = new CustomShipParserImpl();
+    List<Ship> ships = parser.parseShips(lines);
+    try (ExecutorService service = Executors.newCachedThreadPool()) {
+      for (Ship ship : ships) {
+        service.submit(ship);
+        TimeUnit.MICROSECONDS.sleep(100);
+      }
+    }
   }
 }

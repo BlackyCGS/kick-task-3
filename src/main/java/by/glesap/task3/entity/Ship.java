@@ -4,7 +4,9 @@ import by.glesap.task3.entity.impl.ShipArrivedState;
 import by.glesap.task3.entity.impl.ShipDepartedState;
 import by.glesap.task3.exception.DockException;
 
-public class Ship extends Thread{
+import java.util.concurrent.Callable;
+
+public class Ship implements Callable<Void> {
   private String shipName;
   private int capacity;
   private int containerAmount;
@@ -69,11 +71,12 @@ public class Ship extends Thread{
 
 
   @Override
-  public void run() {
+  public Void call() {
     this.setShipState(new ShipArrivedState());
     while(!(this.getShipState() instanceof ShipDepartedState)) {
       shipState.handle(this);
     }
     shipState.handle(this);
+    return null;
   }
 }

@@ -16,10 +16,10 @@ public class ShipArrivedState implements ShipState {
   @Override
   public void handle(Ship ship) {
     try {
-      TimeUnit.SECONDS.sleep(3);
+      logger.info("Ship {} arrived", ship.getShipName());
       Dock dock = dockService.requestFreeDock();
       dockService.dockShip(ship, dock);
-      logger.info("Ship {} arrived", ship.getShipName());
+      TimeUnit.SECONDS.sleep(3);
       ship.setShipState(new ShipDockedState());
     }
     catch (InterruptedException e) {

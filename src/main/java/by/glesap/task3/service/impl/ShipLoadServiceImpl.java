@@ -13,31 +13,30 @@ public class ShipLoadServiceImpl implements ShipLoadService {
 
   @Override
   public void loadShip(Ship ship) {
+    logger.info("Starting loading ship {}", ship.getShipName());
     int amountToLoad = ship.getCapacity() - ship.getContainerAmount();
-    if(amountToLoad < storage.getLoadContainerAmount()) {
-      try{
+    try{
         ship.load(amountToLoad);
         storage.borrowContainers(amountToLoad);
-      }
-      catch(DockException e) {
-        logger.error(e.getMessage());
-      }
     }
+    catch(DockException e) {
+      logger.error(e.getMessage());
+    }
+
     logger.info("Ship {} loaded", ship.getShipName());
   }
 
   @Override
   public void unloadShip(Ship ship) {
+    logger.info("Starting unloading ship {}", ship.getShipName());
     int amount = ship.getContainerAmount();
-    if (storage.getUnloadContainerAmount() - amount > 0) {
-      try {
-        ship.unload(amount);
+    try {
         storage.addContainers(amount);
+        ship.unload(amount);
       }
       catch (DockException e) {
         logger.error(e.getMessage());
       }
-    }
     logger.info("Ship {} unloaded", ship.getShipName());
   }
 }

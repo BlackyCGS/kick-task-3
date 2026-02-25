@@ -2,7 +2,8 @@
 
     <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
 
-    <conversionRule conversionWord="highlightex" converterClass="by.glesap.task2.util.HighlightingCompositeConverterEx" />
+    <conversionRule conversionWord="highlightex"
+                    converterClass="by.glesap.task3.util.HighlightingCompositeConverterEx" />
 
     <property name="LOG_PATH" value="logs"/>
 

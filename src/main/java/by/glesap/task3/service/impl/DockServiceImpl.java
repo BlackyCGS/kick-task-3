@@ -4,12 +4,10 @@ import by.glesap.task3.entity.Dock;
 import by.glesap.task3.entity.Ship;
 import by.glesap.task3.repository.DockRepository;
 import by.glesap.task3.service.DockService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DockServiceImpl implements DockService {
   private static final Logger logger = LoggerFactory.getLogger(DockServiceImpl.class);
@@ -29,6 +27,7 @@ public class DockServiceImpl implements DockService {
     finally {
       lock.unlock();
     }
+    logger.info("Free dock aquired");
     return dock;
   }
 

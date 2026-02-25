@@ -1,14 +1,11 @@
 package by.glesap.task3.repository;
 
 import by.glesap.task3.entity.Dock;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DockRepository {
   private static final Logger logger = LoggerFactory.getLogger(DockRepository.class);
@@ -51,7 +48,6 @@ public class DockRepository {
   }
 
   public Dock getFreeDock() {
-    logger.info("getFreeDock()");
     try {
       lock.lock();
       return docks.pollFirst();
