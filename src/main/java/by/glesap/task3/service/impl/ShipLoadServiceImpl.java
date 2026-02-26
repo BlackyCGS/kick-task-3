@@ -15,11 +15,10 @@ public class ShipLoadServiceImpl implements ShipLoadService {
   public void loadShip(Ship ship) {
     logger.info("Starting loading ship {}", ship.getShipName());
     int amountToLoad = ship.getCapacity() - ship.getContainerAmount();
-    try{
-        ship.load(amountToLoad);
-        storage.borrowContainers(amountToLoad);
-    }
-    catch(DockException e) {
+    try {
+      ship.load(amountToLoad);
+      storage.borrowContainers(amountToLoad);
+    } catch (DockException e) {
       logger.error(e.getMessage());
     }
 
@@ -31,12 +30,11 @@ public class ShipLoadServiceImpl implements ShipLoadService {
     logger.info("Starting unloading ship {}", ship.getShipName());
     int amount = ship.getContainerAmount();
     try {
-        storage.addContainers(amount);
-        ship.unload(amount);
-      }
-      catch (DockException e) {
-        logger.error(e.getMessage());
-      }
+      storage.addContainers(amount);
+      ship.unload(amount);
+    } catch (DockException e) {
+      logger.error(e.getMessage());
+    }
     logger.info("Ship {} unloaded", ship.getShipName());
   }
 }

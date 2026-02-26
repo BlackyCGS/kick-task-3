@@ -1,15 +1,14 @@
 package by.glesap.task3.reader.impl;
 
 import by.glesap.task3.reader.CustomFileReader;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CustomFileReaderImpl implements CustomFileReader {
   private static final Logger logger = LoggerFactory.getLogger(CustomFileReaderImpl.class);

@@ -3,7 +3,6 @@ package by.glesap.task3.entity;
 import by.glesap.task3.entity.impl.ShipArrivedState;
 import by.glesap.task3.entity.impl.ShipDepartedState;
 import by.glesap.task3.exception.DockException;
-
 import java.util.concurrent.Callable;
 
 public class Ship implements Callable<Void> {
@@ -40,14 +39,14 @@ public class Ship implements Callable<Void> {
   }
 
   public void unload(int amount) throws DockException {
-    if(amount > containerAmount) {
+    if (amount > containerAmount) {
       throw new DockException("amount is greater that amount of containers on ship");
     }
     containerAmount -= amount;
   }
 
   public void load(int amount) throws DockException {
-    if(amount + containerAmount > capacity) {
+    if (amount + containerAmount > capacity) {
       throw new DockException("amount is greater than capacity");
     }
     containerAmount += amount;
@@ -69,11 +68,10 @@ public class Ship implements Callable<Void> {
     this.currentDock = currentDock;
   }
 
-
   @Override
   public Void call() {
     this.setShipState(new ShipArrivedState());
-    while(!(this.getShipState() instanceof ShipDepartedState)) {
+    while (!(this.getShipState() instanceof ShipDepartedState)) {
       shipState.handle(this);
     }
     shipState.handle(this);

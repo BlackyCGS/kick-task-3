@@ -23,8 +23,7 @@ public class DockServiceImpl implements DockService {
       do {
         dock = repository.getFreeDock();
       } while (dock == null);
-    }
-    finally {
+    } finally {
       lock.unlock();
     }
     logger.info("Free dock aquired");

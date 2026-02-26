@@ -5,14 +5,14 @@ import by.glesap.task3.entity.Ship;
 import by.glesap.task3.entity.ShipState;
 import by.glesap.task3.service.DockService;
 import by.glesap.task3.service.impl.DockServiceImpl;
+import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.concurrent.TimeUnit;
 
 public class ShipArrivedState implements ShipState {
   private static final Logger logger = LoggerFactory.getLogger(ShipArrivedState.class);
   private final DockService dockService = new DockServiceImpl();
+
   @Override
   public void handle(Ship ship) {
     try {
@@ -21,9 +21,9 @@ public class ShipArrivedState implements ShipState {
       dockService.dockShip(ship, dock);
       TimeUnit.SECONDS.sleep(3);
       ship.setShipState(new ShipDockedState());
-    }
-    catch (InterruptedException e) {
+    } catch (InterruptedException e) {
       logger.error(e.getMessage());
+      Thread.currentThread().interrupt();
     }
 
   }

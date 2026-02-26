@@ -20,11 +20,11 @@ public class DockRepository {
       try {
         lock.lock();
         if (instance == null) {
+          logger.info("Creating new instance of DockRepository");
           instance = new DockRepository();
           isCreated.set(true);
         }
-      }
-      finally {
+      } finally {
         lock.unlock();
       }
     }
@@ -41,8 +41,7 @@ public class DockRepository {
     try {
       lock.lock();
       docks.addLast(dock);
-    }
-    finally {
+    } finally {
       lock.unlock();
     }
   }
@@ -51,8 +50,7 @@ public class DockRepository {
     try {
       lock.lock();
       return docks.pollFirst();
-    }
-    finally {
+    } finally {
       lock.unlock();
     }
   }

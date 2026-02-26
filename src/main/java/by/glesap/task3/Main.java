@@ -6,12 +6,13 @@ import by.glesap.task3.parser.impl.CustomShipParserImpl;
 import by.glesap.task3.reader.CustomFileReader;
 import by.glesap.task3.reader.impl.CustomFileReaderImpl;
 import by.glesap.task3.util.StorageLoader;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Main {
   public static final Logger logger = LoggerFactory.getLogger(Main.class);
@@ -23,8 +24,7 @@ public class Main {
     List<String> lines;
     try {
       lines = reader.readFile("data/input.txt");
-    }
-    catch (IOException e) {
+    } catch (IOException e) {
       logger.error(e.getMessage());
       logger.error("Shutting down...");
       return;

@@ -2,18 +2,17 @@ package by.glesap.task3.parser.impl;
 
 import by.glesap.task3.entity.Ship;
 import by.glesap.task3.parser.CustomShipParser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CustomShipParserImpl implements CustomShipParser {
   private static final Logger logger = LoggerFactory.getLogger(CustomShipParserImpl.class);
   /**
-   * Regex that literally finds correct int numbers in string
+   * Regex that literally finds correct int numbers in string.
    */
   private static final String SHIP_PARAMETERS_REGEX = "\\w+";
 

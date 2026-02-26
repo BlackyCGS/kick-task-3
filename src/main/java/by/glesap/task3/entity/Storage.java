@@ -26,8 +26,7 @@ public class Storage {
           instance = new Storage(100);
           isCreated.set(true);
         }
-      }
-      finally {
+      } finally {
         lock.unlock();
       }
     }
@@ -69,12 +68,11 @@ public class Storage {
     try {
       lock.lock();
       while (amount > 0) {
-        if(unloadContainerAmount.get() + amount < unloadCapacity) {
+        if (unloadContainerAmount.get() + amount < unloadCapacity) {
           logger.info("Adding {} containers to unload storage in one step", amount);
           unloadContainerAmount.addAndGet(amount);
           amount = 0;
-        }
-        else {
+        } else {
           int availableSpace = unloadCapacity - unloadContainerAmount.get();
           if (availableSpace == 0) {
             continue;
@@ -89,11 +87,10 @@ public class Storage {
           TimeUnit.SECONDS.sleep(1);
         }
       }
-    }
-    catch (InterruptedException e) {
+    } catch (InterruptedException e) {
       logger.error(e.getMessage());
-    }
-    finally {
+      Thread.currentThread().interrupt();
+    } finally {
       lock.unlock();
     }
   }
@@ -103,11 +100,11 @@ public class Storage {
       lock.lock();
       while (amountToBorrow > 0) {
         if (loadContainerAmount.get() >= amountToBorrow) {
-          logger.info("Borrowed {} containers in one step. Remaining containers: {}", amountToBorrow, unloadContainerAmount.get());
+          logger.info("Borrowed {} containers in one step. Remaining containers: {}",
+                  amountToBorrow, unloadContainerAmount.get());
           loadContainerAmount.addAndGet(-amountToBorrow);
           amountToBorrow = 0;
-        }
-        else {
+        } else {
           int availableContainers = loadContainerAmount.get();
           if (availableContainers == 0) {
             continue;
@@ -124,6 +121,7 @@ public class Storage {
       }
     } catch (InterruptedException e) {
       logger.error(e.getMessage());
+      Thread.currentThread().interrupt();
     } finally {
       lock.unlock();
     }

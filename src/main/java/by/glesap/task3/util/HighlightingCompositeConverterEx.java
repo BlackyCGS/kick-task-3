@@ -14,7 +14,7 @@ public class HighlightingCompositeConverterEx
     Level level = event.getLevel();
     return switch (level.toInt()) {
       case Level.ERROR_INT ->
-              ANSIConstants.BOLD + ANSIConstants.RED_FG;
+          ANSIConstants.BOLD + ANSIConstants.RED_FG;
       case Level.WARN_INT -> ANSIConstants.YELLOW_FG;
       case Level.INFO_INT -> ANSIConstants.GREEN_FG;
       case Level.DEBUG_INT -> ANSIConstants.CYAN_FG;
